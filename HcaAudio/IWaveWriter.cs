@@ -1,8 +1,9 @@
 ﻿using System.IO;
 
-namespace DereTore.Exchange.Audio.HCA {
-    public interface IWaveWriter {
-
+namespace DereTore.Exchange.Audio.HCA
+{
+    public interface IWaveWriter
+    {
         SamplingMode SamplingMode { get; }
 
         uint BytesPerSample { get; }
@@ -17,6 +18,5 @@ namespace DereTore.Exchange.Audio.HCA {
         uint DecodeToBuffer(float f, byte[] buffer, uint offset);
 
         uint DecodeToStream(float f, Stream stream);
-
     }
 }

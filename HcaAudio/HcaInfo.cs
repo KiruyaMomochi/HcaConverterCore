@@ -1,6 +1,7 @@
-﻿namespace DereTore.Exchange.Audio.HCA {
-    public struct HcaInfo {
-
+﻿namespace DereTore.Exchange.Audio.HCA
+{
+    public struct HcaInfo
+    {
         public ushort Version;
         public uint DataOffset;
         public uint ChannelCount;
@@ -30,6 +31,5 @@
         public float RvaVolume;
         public uint CommentLength;
         public byte[] Comment;
-
     }
 }

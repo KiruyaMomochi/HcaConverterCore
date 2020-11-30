@@ -1,24 +1,29 @@
 ﻿using System;
 
-namespace DereTore.Common {
-    public static class DereToreHelper {
-
-        public static ushort SwapEndian(ushort v) {
-            var r = (ushort)(v & 0xff);
+namespace DereTore.Common
+{
+    public static class DereToreHelper
+    {
+        public static ushort SwapEndian(ushort v)
+        {
+            var r = (ushort) (v & 0xff);
             r <<= 8;
             v >>= 8;
-            r |= (ushort)(v & 0xff);
+            r |= (ushort) (v & 0xff);
             return r;
         }
 
-        public static short SwapEndian(short v) {
-            unchecked {
-                var s = (ushort)v;
-                return (short)SwapEndian(s);
+        public static short SwapEndian(short v)
+        {
+            unchecked
+            {
+                var s = (ushort) v;
+                return (short) SwapEndian(s);
             }
         }
 
-        public static uint SwapEndian(uint v) {
+        public static uint SwapEndian(uint v)
+        {
             var r = v & 0xff;
             r <<= 8;
             v >>= 8;
@@ -32,14 +37,17 @@ namespace DereTore.Common {
             return r;
         }
 
-        public static int SwapEndian(int v) {
-            unchecked {
-                var s = (uint)v;
-                return (int)SwapEndian(s);
+        public static int SwapEndian(int v)
+        {
+            unchecked
+            {
+                var s = (uint) v;
+                return (int) SwapEndian(s);
             }
         }
 
-        public static ulong SwapEndian(ulong v) {
+        public static ulong SwapEndian(ulong v)
+        {
             var r = v & 0xff;
             r <<= 8;
             v >>= 8;
@@ -65,14 +73,17 @@ namespace DereTore.Common {
             return r;
         }
 
-        public static long SwapEndian(long v) {
-            unchecked {
-                var s = (ulong)v;
-                return (long)SwapEndian(s);
+        public static long SwapEndian(long v)
+        {
+            unchecked
+            {
+                var s = (ulong) v;
+                return (long) SwapEndian(s);
             }
         }
 
-        public static float SwapEndian(float v) {
+        public static float SwapEndian(float v)
+        {
             var bytes = BitConverter.GetBytes(v);
             var b = bytes[0];
             bytes[0] = bytes[1];
@@ -83,17 +94,18 @@ namespace DereTore.Common {
             return BitConverter.ToSingle(bytes, 0);
         }
 
-        public static double SwapEndian(double v) {
+        public static double SwapEndian(double v)
+        {
             var bytes = BitConverter.GetBytes(v);
             Array.Reverse(bytes);
             return BitConverter.ToDouble(bytes, 0);
         }
 
-        public static void Swap<T>(ref T t1, ref T t2) {
+        public static void Swap<T>(ref T t1, ref T t2)
+        {
             var t = t1;
             t1 = t2;
             t2 = t;
         }
-
     }
 }

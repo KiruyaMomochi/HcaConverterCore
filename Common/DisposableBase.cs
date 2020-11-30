@@ -1,16 +1,17 @@
 ﻿using System;
 
-namespace DereTore.Common {
-    public abstract class DisposableBase : IDisposable {
-
-        protected DisposableBase() {
+namespace DereTore.Common
+{
+    public abstract class DisposableBase : IDisposable
+    {
+        protected DisposableBase()
+        {
             _isDisposed = false;
         }
 
-        public void Dispose() {
-            if (_isDisposed) {
-                return;
-            }
+        public void Dispose()
+        {
+            if (_isDisposed) return;
             Dispose(true);
             _isDisposed = true;
         }
@@ -21,13 +22,11 @@ namespace DereTore.Common {
 
         private bool _isDisposed;
 
-        ~DisposableBase() {
-            if (_isDisposed) {
-                return;
-            }
+        ~DisposableBase()
+        {
+            if (_isDisposed) return;
             Dispose(false);
             _isDisposed = true;
         }
-
     }
 }

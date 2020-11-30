@@ -1,27 +1,31 @@
 ﻿using System;
 
-namespace DereTore.Exchange.Audio.HCA {
-    internal static class HcaHelper {
-
-        static HcaHelper() {
+namespace DereTore.Exchange.Audio.HCA
+{
+    internal static class HcaHelper
+    {
+        static HcaHelper()
+        {
             SyncObject = new object();
         }
 
-        public static void TranslateTables() {
-            lock (SyncObject) {
-                if (_tablesTranslated) {
-                    return;
-                }
+        public static void TranslateTables()
+        {
+            lock (SyncObject)
+            {
+                if (_tablesTranslated) return;
                 ChannelTables.TranslateTables();
                 _tablesTranslated = true;
             }
         }
 
-        public static uint Ceil2(uint a, uint b) {
-            return (b > 0) ? (uint)(a / b + ((a % b) != 0 ? 1 : 0)) : 0;
+        public static uint Ceil2(uint a, uint b)
+        {
+            return b > 0 ? (uint) (a / b + (a % b != 0 ? 1 : 0)) : 0;
         }
 
-        public static ushort Checksum(byte[] data, ushort sum) {
+        public static ushort Checksum(byte[] data, ushort sum)
+        {
             return Checksum(data, sum, data.Length);
         }
 
@@ -32,83 +36,87 @@ namespace DereTore.Exchange.Audio.HCA {
         /// headerBytes[headerBytes.Length - 2] = HIBYTE(headerChecksum);
         /// headerBytes[headerBytes.Length - 1] = LOBYTE(headerChecksum);
         /// </example>
-        public static ushort Checksum(byte[] data, ushort sum, int length) {
+        public static ushort Checksum(byte[] data, ushort sum, int length)
+        {
             var dataLength = data.Length;
             dataLength = Math.Min(dataLength, length);
-            for (var i = 0; i < dataLength; ++i) {
-                sum = (ushort)((sum << 8) ^ ChecksumTable[(sum >> 8) ^ data[i]]);
-            }
+            for (var i = 0; i < dataLength; ++i) sum = (ushort) ((sum << 8) ^ ChecksumTable[(sum >> 8) ^ data[i]]);
             return sum;
         }
 
-        public static void SetString(out byte[] p, string value) {
+        public static void SetString(out byte[] p, string value)
+        {
             p = new byte[value.Length];
-            for (var i = 0; i < value.Length; ++i) {
-                p[i] = (byte)value[i];
-            }
+            for (var i = 0; i < value.Length; ++i) p[i] = (byte) value[i];
         }
 
-        public static float UInt32ToSingleBits(uint v) {
+        public static float UInt32ToSingleBits(uint v)
+        {
             return BitConverter.ToSingle(BitConverter.GetBytes(v), 0);
         }
 
-        public static uint SingleToUInt32Bits(float v) {
+        public static uint SingleToUInt32Bits(float v)
+        {
             return BitConverter.ToUInt32(BitConverter.GetBytes(v), 0);
         }
 
-        public static void Clamp(ref float value, float minimum, float maximum) {
-            if (value < minimum) {
+        public static void Clamp(ref float value, float minimum, float maximum)
+        {
+            if (value < minimum)
                 value = minimum;
-            } else if (value > maximum) {
-                value = maximum;
-            }
+            else if (value > maximum) value = maximum;
         }
 
-        public static float Clamp(float value, float minimum, float maximum) {
-            return value < minimum ? minimum : (value > maximum ? maximum : value);
+        public static float Clamp(float value, float minimum, float maximum)
+        {
+            return value < minimum ? minimum : value > maximum ? maximum : value;
         }
 
-        public static void Exchange<T>(ref T v1, ref T v2) {
+        public static void Exchange<T>(ref T v1, ref T v2)
+        {
             var v3 = v1;
             v1 = v2;
             v2 = v3;
         }
 
-        public static bool Succeeded(ActionResult actionResult) {
+        public static bool Succeeded(ActionResult actionResult)
+        {
             return actionResult >= 0;
         }
 
-        public static bool Failed(ActionResult actionResult) {
+        public static bool Failed(ActionResult actionResult)
+        {
             return actionResult < 0;
         }
 
-        public static uint CalculateLengthInSamples(HcaInfo hcaInfo) {
+        public static uint CalculateLengthInSamples(HcaInfo hcaInfo)
+        {
             return hcaInfo.BlockCount * hcaInfo.ChannelCount * 0x80 * 8;
         }
 
-        public static uint CalculateLengthInSamples(HcaInfo hcaInfo, uint loopCount, bool infiniteLoop) {
-            if (infiniteLoop) {
-                return uint.MaxValue;
-            }
+        public static uint CalculateLengthInSamples(HcaInfo hcaInfo, uint loopCount, bool infiniteLoop)
+        {
+            if (infiniteLoop) return uint.MaxValue;
             var totalBlockCount = hcaInfo.BlockCount;
             totalBlockCount += (hcaInfo.LoopEnd - hcaInfo.LoopStart + 1) * loopCount;
             return totalBlockCount * hcaInfo.ChannelCount * 0x80 * 8;
         }
 
-        public static float CalculateLengthInSeconds(HcaInfo hcaInfo) {
-            return hcaInfo.BlockCount * 0x80 * 8 / (float)hcaInfo.SamplingRate;
+        public static float CalculateLengthInSeconds(HcaInfo hcaInfo)
+        {
+            return hcaInfo.BlockCount * 0x80 * 8 / (float) hcaInfo.SamplingRate;
         }
 
-        public static float CalculateLengthInSeconds(HcaInfo hcaInfo, uint loopCount, bool infiniteLoop) {
-            if (infiniteLoop) {
-                return float.MaxValue;
-            }
+        public static float CalculateLengthInSeconds(HcaInfo hcaInfo, uint loopCount, bool infiniteLoop)
+        {
+            if (infiniteLoop) return float.MaxValue;
             var totalBlockCount = hcaInfo.BlockCount;
             totalBlockCount += (hcaInfo.LoopEnd - hcaInfo.LoopStart + 1) * loopCount;
-            return totalBlockCount * 0x80 * 8 / (float)hcaInfo.SamplingRate;
+            return totalBlockCount * 0x80 * 8 / (float) hcaInfo.SamplingRate;
         }
 
-        private static readonly ushort[] ChecksumTable = {
+        private static readonly ushort[] ChecksumTable =
+        {
             0x0000, 0x8005, 0x800F, 0x000A, 0x801B, 0x001E, 0x0014, 0x8011,
             0x8033, 0x0036, 0x003C, 0x8039, 0x0028, 0x802D, 0x8027, 0x0022,
             0x8063, 0x0066, 0x006C, 0x8069, 0x0078, 0x807D, 0x8077, 0x0072,
@@ -145,6 +153,5 @@ namespace DereTore.Exchange.Audio.HCA {
 
         private static bool _tablesTranslated;
         private static readonly object SyncObject;
-
     }
 }

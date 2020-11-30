@@ -1,6 +1,7 @@
-﻿namespace DereTore.Exchange.Audio.HCA {
-    public enum ActionResult {
-
+﻿namespace DereTore.Exchange.Audio.HCA
+{
+    public enum ActionResult
+    {
         HasMoreData = 1,
         Ok = 0,
         InvalidHandle = -1,
@@ -21,6 +22,5 @@
         NotImplemented = -16,
         DecodeAlreadyCompleted = -17,
         InvalidFieldValue = -18
-
     }
 }

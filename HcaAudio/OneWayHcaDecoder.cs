@@ -1,20 +1,22 @@
 ﻿using System.IO;
 
-namespace DereTore.Exchange.Audio.HCA {
-    public sealed class OneWayHcaDecoder : HcaDecoder {
-
+namespace DereTore.Exchange.Audio.HCA
+{
+    public sealed class OneWayHcaDecoder : HcaDecoder
+    {
         public OneWayHcaDecoder(Stream sourceStream)
-            : base(sourceStream) {
+            : base(sourceStream)
+        {
         }
 
         public OneWayHcaDecoder(Stream sourceStream, DecodeParams decodeParams)
-            : base(sourceStream, decodeParams) {
+            : base(sourceStream, decodeParams)
+        {
         }
 
-        public uint DecodeBlocks(byte[] buffer) {
-            if (!HasMore) {
-                return 0;
-            }
+        public uint DecodeBlocks(byte[] buffer)
+        {
+            if (!HasMore) return 0;
             var decodedBlockCount = DecodeBlocks(buffer, _blockIndex);
             _blockIndex += decodedBlockCount;
             return decodedBlockCount;
@@ -27,6 +29,5 @@ namespace DereTore.Exchange.Audio.HCA {
         public float LengthInSeconds => HcaHelper.CalculateLengthInSeconds(HcaInfo);
 
         private uint _blockIndex = 0;
-
     }
 }

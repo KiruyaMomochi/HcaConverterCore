@@ -1,25 +1,30 @@
 using System;
 using System.IO;
 
-namespace DereTore.Exchange.Audio.HCA {
-    public abstract class HcaAudioStreamBase : Stream {
-
-        protected HcaAudioStreamBase(Stream baseStream, DecodeParams decodeParams) {
+namespace DereTore.Exchange.Audio.HCA
+{
+    public abstract class HcaAudioStreamBase : Stream
+    {
+        protected HcaAudioStreamBase(Stream baseStream, DecodeParams decodeParams)
+        {
             BaseStream = baseStream;
             _decodeParams = decodeParams;
         }
 
         public Stream BaseStream { get; }
 
-        public sealed override void Flush() {
+        public sealed override void Flush()
+        {
             throw new NotSupportedException();
         }
 
-        public sealed override void SetLength(long value) {
+        public sealed override void SetLength(long value)
+        {
             throw new NotSupportedException();
         }
 
-        public sealed override void Write(byte[] buffer, int offset, int count) {
+        public sealed override void Write(byte[] buffer, int offset, int count)
+        {
             throw new NotSupportedException();
         }
 
@@ -41,22 +46,24 @@ namespace DereTore.Exchange.Audio.HCA {
 
         public DecodeParams DecodeParams => _decodeParams;
 
-        protected bool EnsureNotDisposed() {
-            if (IsDisposed) {
-                if (AllowDisposedOperations) {
+        protected bool EnsureNotDisposed()
+        {
+            if (IsDisposed)
+            {
+                if (AllowDisposedOperations)
                     return false;
-                } else {
+                else
                     throw new ObjectDisposedException(typeof(HcaAudioStream).Name);
-                }
-            } else {
+            }
+            else
+            {
                 return true;
             }
         }
 
-        protected override void Dispose(bool disposing) {
-            if (!IsDisposed) {
-                _decoder?.Dispose();
-            }
+        protected override void Dispose(bool disposing)
+        {
+            if (!IsDisposed) _decoder?.Dispose();
 
             _isDisposed = true;
 
@@ -68,6 +75,5 @@ namespace DereTore.Exchange.Audio.HCA {
         protected HcaDecoder _decoder;
         private bool _isDisposed;
         private readonly DecodeParams _decodeParams;
-
     }
 }

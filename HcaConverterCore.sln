@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HcaAudio", "HcaAudio\HcaAudio.csproj", "{A7A332D7-FB72-4C2B-88A5-3AD6C39F92A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{A1034520-F5A6-4F57-B53D-4D2E154CBC41}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HcaCommon", "HcaCommon\HcaCommon.csproj", "{A1034520-F5A6-4F57-B53D-4D2E154CBC41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

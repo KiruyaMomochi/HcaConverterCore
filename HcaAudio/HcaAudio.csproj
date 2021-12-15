@@ -1,10 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
+        <Version>1.0.0</Version>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <PackageId>Kyaru.HcaConverter.HcaAudio</PackageId>
+        <Authors>Kiruya Momochi</Authors>
+        <PackageProjectUrl>https://github.com/KiruyaMomochi/HcaConverterCore</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/KiruyaMomochi/HcaConverterCore</RepositoryUrl>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <None Include="../LICENSE" Pack="true" PackagePath=""/>
+    </ItemGroup>
+    
     <ItemGroup>
       <ProjectReference Include="..\HcaCommon\HcaCommon.csproj" />
     </ItemGroup>
